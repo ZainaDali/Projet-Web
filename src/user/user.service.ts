@@ -10,6 +10,14 @@ export class UserService {
   constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
   async register(data: CreateUserInput) {
+    const existing = await this.prisma.user.findUnique({
+      where: { username: data.username },
+    });
+  
+    if (existing) {
+      throw new Error('Username already taken');
+    }
+  
     const hash = await bcrypt.hash(data.password, 10);
     return this.prisma.user.create({
       data: {
@@ -18,6 +26,7 @@ export class UserService {
       },
     });
   }
+  
 
   async login(data: LoginInput): Promise<string> {
     const user = await this.prisma.user.findUnique({
@@ -31,4 +40,20 @@ export class UserService {
     const payload = { sub: user.id, username: user.username };
     return this.jwtService.sign(payload);
   }
+
+
+  async findById(id: string) {
+    return this.prisma.user.findUnique({ where: { id } });
+  }
+  
+  async findAll() {
+    return this.prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        createdAt: true,
+      },
+    });
+  }
+  
 }
