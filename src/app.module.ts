@@ -1,37 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
-import { HealthController } from './health/health.controller';
-
-import { BullModule } from '@nestjs/bull';
-import { MessageProcessor } from './message/message.processor';
-
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
+import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+    }),
     PrismaModule,
-    // Connexion à Redis
-    BullModule.forRoot({
-      redis: {
-        host: 'localhost',
-        port: 6379,
-      },
-    }),
-    // Déclaration de la queue "message"
-    BullModule.registerQueue({
-      name: 'message',
-    }),
-  ],
-  controllers: [
-    AppController,
-    AppService,
-    HealthController, // Ton contrôleur "OK" + "job"
-  ],
-  providers: [
-    AppService,
-    MessageProcessor, // Ton consumer de la queue
+    UserModule,
   ],
 })
 export class AppModule {}
+

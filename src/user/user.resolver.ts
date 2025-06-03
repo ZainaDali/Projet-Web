@@ -1,23 +1,28 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { PrismaService } from '../prisma/prisma.service';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { UserService } from './user.service';
+import { CreateUserInput } from './dto/create-user.input';
+import { LoginInput } from './dto/login.input';
 import { User } from './user.model';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private prisma: PrismaService) {}
-
-  @Query(() => [User])
-  async users(): Promise<User[]> {
-    return this.prisma.user.findMany();
-  }
+  constructor(private readonly userService: UserService) {}
 
   @Mutation(() => User)
-  async createUser(
-    @Args('username') username: string,
-    @Args('password') password: string,
-  ): Promise<User> {
-    return this.prisma.user.create({
-      data: { username, password },
-    });
+  register(@Args('data') data: CreateUserInput) {
+    return this.userService.register(data);
+  }
+
+  @Mutation(() => String)
+  login(@Args('data') data: LoginInput) {
+    return this.userService.login(data);
+  }
+
+  // ✅ Ajout d'une query minimale pour éviter l'erreur
+  @Query(() => String)
+  hello(): string {
+    return 'Hello from GraphQL';
   }
 }
+
+
