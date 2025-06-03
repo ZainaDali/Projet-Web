@@ -7,8 +7,11 @@ import { HealthController } from './health/health.controller';
 import { BullModule } from '@nestjs/bull';
 import { MessageProcessor } from './message/message.processor';
 
+import { PrismaModule } from './prisma/prisma.module';
+
 @Module({
   imports: [
+    PrismaModule,
     // Connexion à Redis
     BullModule.forRoot({
       redis: {
@@ -23,6 +26,7 @@ import { MessageProcessor } from './message/message.processor';
   ],
   controllers: [
     AppController,
+    AppService,
     HealthController, // Ton contrôleur "OK" + "job"
   ],
   providers: [
