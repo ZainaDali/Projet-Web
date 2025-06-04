@@ -12,8 +12,12 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'; // 👉 à ajouter
 import { join } from 'path';
 
+import { PrismaModule } from './prisma/prisma.module';
+
+
 @Module({
   imports: [
+    PrismaModule,
     // Redis avec BullMQ
     BullModule.forRoot({
       redis: {
