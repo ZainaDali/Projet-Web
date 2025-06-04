@@ -43,8 +43,15 @@ export class UserService {
 
 
   async findById(id: string) {
-    return this.prisma.user.findUnique({ where: { id } });
+  if (!id) {
+    throw new Error('User ID is undefined'); // sécurité en plus
   }
+
+  return this.prisma.user.findUnique({
+    where: { id },
+  });
+}
+
   
   async findAll() {
     return this.prisma.user.findMany({

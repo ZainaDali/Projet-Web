@@ -6,7 +6,7 @@ import { User } from './user.model';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../auth/gql-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
-
+import { Context } from '@nestjs/graphql';
 @Resolver(() => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
@@ -28,10 +28,11 @@ export class UserResolver {
   }
 
   @Query(() => User)
-@UseGuards(GqlAuthGuard)
-me(@CurrentUser() user: any) {
-  return this.userService.findById(user.id); // 🟢 ici
-}
+  @UseGuards(GqlAuthGuard)
+  async me(@Context('req') req: any) {
+    return this.userService.findById(req.user?.sub); // ❌ si sub est undefined
+  }
+
 
 
   @Query(() => [User])
