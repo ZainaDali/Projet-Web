@@ -6,13 +6,14 @@ import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { Message } from 'primereact/message';
 import { Card } from 'primereact/card';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ username: '', password: '' });
   const [loginUser, { loading }] = useMutation(LOGIN_USER);
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -24,11 +25,19 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await loginUser({ variables: formData });
-      setSuccess("Connexion réussie !");
+      const { data } = await loginUser({
+        variables: {
+          data: {
+            username: formData.username,
+            password: formData.password
+          }
+        }
+      });
+
+      localStorage.setItem('token', data.login); // login retourne un token
+      setSuccess('Connexion réussie !');
       setError(null);
-      localStorage.setItem("token", data.login.token);
-      window.location.href = "/home";
+      navigate('/Profile'); // ou autre page
     } catch (err) {
       setError(err.message);
       setSuccess(null);
@@ -36,33 +45,27 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-content-center align-items-center min-h-screen bg-gray-100">
-      <Card
-        title="Se connecter"
-        className="p-4 shadow-3"
-        
-      >
+    <div className="flex justify-content-center align-items-center min-h-screen bg-gray-100 p-4">
+      <Card title="Connexion" style={{ width: '100%', maxWidth: '400px' }}>
         <form onSubmit={handleSubmit} className="p-fluid">
-          <div className="field mb-4">
-            <label htmlFor="email" className="block mb-2">Email</label>
-            <InputText id="email" name="email" type="email" value={formData.email} onChange={handleChange} required />
+          <div className="field">
+            <label htmlFor="username">Nom d'utilisateur</label>
+            <InputText id="username" name="username" value={formData.username} onChange={handleChange} required />
           </div>
 
-          <div className="field mb-4">
-            <label htmlFor="password" className="block mb-2">Mot de passe</label>
+          <div className="field">
+            <label htmlFor="password">Mot de passe</label>
             <Password id="password" name="password" value={formData.password} onChange={handleChange} toggleMask required />
           </div>
 
-          <div className="mb-3">
-            <Button type="submit" label="Connexion" loading={loading} className="w-full" />
-          </div>
+          <Button type="submit" label="Se connecter" className="mt-3" loading={loading} />
 
-          {success && <Message severity="success" text={success} className="mb-3" />}
-          {error && <Message severity="error" text={error} className="mb-3" />}
+          {success && <Message severity="success" text={success} className="mt-3" />}
+          {error && <Message severity="error" text={error} className="mt-3" />}
         </form>
-
-        <div className="text-center mt-3">
-          <small>Pas de compte ? <Link to="/register" className="text-blue-500">S’inscrire ici</Link></small>
+        <div className="mt-3 text-center">
+          <span>Pas encore de compte ? </span>
+          <a href="/register" className="text-blue-600 hover:underline">S'inscrire ici</a>
         </div>
       </Card>
     </div>

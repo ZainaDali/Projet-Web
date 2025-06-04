@@ -9,7 +9,7 @@ import { Card } from 'primereact/card';
 import { Link } from 'react-router-dom';
 
 export default function Register() {
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ username: '', password: '' });
   const [registerUser, { loading }] = useMutation(REGISTER_USER);
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
@@ -22,17 +22,25 @@ export default function Register() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await registerUser({ variables: formData });
-      setSuccess("Inscription réussie !");
-      setError(null);
-      localStorage.setItem("token", data.register.token);
-    } catch (err) {
-      setError(err.message);
-      setSuccess(null);
-    }
-  };
+  e.preventDefault();
+  try {
+    const { data } = await registerUser({
+      variables: {
+        data: {
+          username: formData.username,
+          password: formData.password
+        }
+      }
+    });
+    setSuccess("Inscription réussie !");
+    setError(null);
+    console.log(data); // à enlever plus tard
+  } catch (err) {
+    setError(err.message);
+    setSuccess(null);
+  }
+};
+
 
   return (
     <div className="flex justify-content-center align-items-center min-h-screen bg-gray-100 p-4">
@@ -41,11 +49,6 @@ export default function Register() {
           <div className="field">
             <label htmlFor="username">Nom d'utilisateur</label>
             <InputText id="username" name="username" value={formData.username} onChange={handleChange} required />
-          </div>
-
-          <div className="field">
-            <label htmlFor="email">Email</label>
-            <InputText id="email" name="email" type="email" value={formData.email} onChange={handleChange} required />
           </div>
 
           <div className="field">
