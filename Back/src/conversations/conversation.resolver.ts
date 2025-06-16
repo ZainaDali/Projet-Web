@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args, Query, Context } from '@nestjs/graphql';
 import { ConversationsService } from './conversations.service';
 import { Conversation } from './conversation.entity';
 import { CreateConversationInput } from './dto/create-conversation.input';
-import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
+import { GqlAuthGuard } from '../auth/gql-auth.guard';
 import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Conversation)
