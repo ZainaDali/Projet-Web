@@ -36,3 +36,9 @@ export const SEND_MESSAGE = gql`
     }
   }
 `;
+
+export const ENQUEUE_MESSAGE = gql`
+  mutation EnqueueMessage($data: CreateMessageInput!) {
+    enqueueMessage(data: $data)
+  }
+`;

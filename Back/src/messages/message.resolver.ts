@@ -9,11 +9,25 @@ export class MessagesResolver {
 
   @Mutation(() => Message)
   async sendMessage(@Args('data') data: CreateMessageInput) {
-    return this.messagesService.create(data.content, data.senderId, data.conversationId);
+    return this.messagesService.create(
+      data.content,
+      data.senderId,
+      data.conversationId,
+    );
   }
 
   @Query(() => [Message])
   async getMessages(@Args('conversationId') conversationId: string) {
     return this.messagesService.findByConversation(conversationId);
+  }
+
+  @Mutation(() => Boolean)
+  async enqueueMessage(@Args('data') data: CreateMessageInput) {
+    await this.messagesService.enqueueMessage(
+      data.content,
+      data.senderId,
+      data.conversationId,
+    );
+    return true;
   }
 }

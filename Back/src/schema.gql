@@ -43,6 +43,7 @@ type Mutation {
   login(data: LoginInput!): String!
   createConversation(data: CreateConversationInput!): Conversation!
   sendMessage(data: CreateMessageInput!): Message!
+  enqueueMessage(data: CreateMessageInput!): Boolean!
 }
 
 input CreateUserInput {
