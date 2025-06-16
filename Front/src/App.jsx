@@ -6,16 +6,21 @@ import Profile from './pages/Profile';
 import CreateConversation from './pages/CreateConversation';
 import Chat from './pages/Chat';
 import Conversations from './pages/Conversations';
+import NotificationCenter from './components/NotificationCenter';
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/Profile" element={<Profile />} />
-      <Route path="/createconversation" element={<CreateConversation />} />
-      <Route path="/chat/:conversationId" element={<Chat />} />
-      <Route path="Conversations" element={<Conversations />} />
-    </Routes> 
+
+    <>
+      <NotificationCenter /> {/* Sera visible partout */}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/Profile" element={<Profile />} />
+        <Route path="/createconversation" element={<CreateConversation />} />
+        <Route path="/chat/:conversationId" element={<Chat />} />
+        <Route path="/Conversations" element={<Conversations />} />
+      </Routes>
+    </> 
   );
 }

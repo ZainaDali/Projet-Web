@@ -10,6 +10,7 @@ export default function Sidebar() {
   return (
     <div className="w-64 h-screen fixed top-0 left-0 bg-gray-800 text-white p-6 shadow-lg">
       <h2 className="text-2xl font-bold mb-10">MonApp</h2>
+      
       <ul className="space-y-6">
         <li>
           <Link
@@ -22,15 +23,29 @@ export default function Sidebar() {
           </Link>
         </li>
         <li>
-          <Link
-            to="/conversations"
+          <li>
+          <a
+            href="/conversations"
             className={`block p-2 rounded-lg transition duration-300 ${
               isActive('/conversations') ? 'bg-gray-700' : 'hover:bg-gray-700'
             }`}
           >
             💬 Conversations
+          </a>
+        </li>
+
+        </li>
+        <li>
+          <Link
+            to="/createconversation"
+            className={`block p-2 rounded-lg transition duration-300 ${
+              isActive('/createconversation') ? 'bg-gray-700' : 'hover:bg-gray-700'
+            }`}
+          >
+            ➕ Créer une conversation
           </Link>
         </li>
+
       </ul>
     </div>
   );

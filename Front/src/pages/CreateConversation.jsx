@@ -7,7 +7,7 @@ import { Button } from 'primereact/button';
 import { Message } from 'primereact/message';
 import { useNavigate } from 'react-router-dom';
 import { GET_ME } from '../graphql/queries';
-
+import Sidebar from '../components/Sidebar';
 export default function CreateConversation() {
   const navigate = useNavigate();
   const { data: meData, loading: meLoading } = useQuery(GET_ME);
@@ -47,6 +47,10 @@ export default function CreateConversation() {
   if (error) return <p>Erreur lors du chargement des utilisateurs</p>;
 
   return (
+     <div className="flex">
+          <div className="sidebar">
+            <Sidebar />
+          </div>
     <div className="p-4">
       <h2>Créer une nouvelle conversation</h2>
       {success && <Message severity="success" text={success} className="my-3" />}
@@ -61,6 +65,7 @@ export default function CreateConversation() {
             />
           </Card>
         ))}
+    </div>
     </div>
   );
 }

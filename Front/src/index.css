@@ -36,7 +36,8 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: blue;
+  color: white;
   cursor: pointer;
   transition: border-color 0.25s;
   margin-top: 20px;
@@ -86,4 +87,31 @@ button:focus-visible {
   flex: 1;
   overflow-y: auto;
   background-color: #f9fafb; /* bg-gray-100 */
+}
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.message {
+  max-width: 60%;
+  padding: 10px 15px;
+  margin: 10px;
+  border-radius: 10px;
+  clear: both;
+}
+
+.message.me {
+  background-color: #007bff; /* bleu */
+  color: white;
+  margin-left: auto;
+  text-align: left;
+}
+
+.message.other {
+  background-color: #e5e5ea; /* gris clair */
+  color: black;
+  margin-right: auto;
+  text-align: left;
 }
