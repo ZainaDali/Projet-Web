@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - deploy-imane
 
 jobs:
   build-and-test:
@@ -31,20 +31,20 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        working-directory: ./backend
+        working-directory: ./Back
         run: npm install
 
       - name: Generate Prisma client
-        working-directory: ./backend
+        working-directory: ./Back
         run: npx prisma generate
 
       - name: Run build
-        working-directory: ./backend
+        working-directory: ./Back
         run: npm run build
 
       - name: Run tests
-        working-directory: ./backend
+        working-directory: ./Back
         run: npm run test
 
       - name: Docker build backend
-        run: docker build -t backend-app ./backend
+        run: docker build -t backend-app ./Back
