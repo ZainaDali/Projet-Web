@@ -31,6 +31,17 @@ export default function Sidebar() {
             💬 Conversations
           </Link>
         </li>
+        <li>
+          <Link
+            to="/CreateConversation"
+            className={`block p-2 rounded-lg transition duration-300 ${
+              isActive('/') ? 'bg-gray-700' : 'hover:bg-gray-700'
+            }`}
+          >
+            ➕ Créer une conversation
+          </Link>
+        </li>
+
       </ul>
     </div>
   );

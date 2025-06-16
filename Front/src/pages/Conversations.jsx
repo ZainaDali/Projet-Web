@@ -16,7 +16,7 @@ export default function Conversations() {
   if (error) return <p>Erreur : {error.message}</p>;
 
   const conversations = data?.myConversations || [];
-
+  console.log("Mes conversations :", conversations);
   return (
     <div>
       <h2>Mes conversations</h2>
@@ -35,6 +35,7 @@ export default function Conversations() {
                   .join(', ')
               }<br />
               Dernier message : {conv.messages[0]?.content || 'Aucun message'}
+              ------conversationId: {conv.id}------
             </li>
           ))}
         </ul>
