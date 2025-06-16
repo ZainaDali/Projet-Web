@@ -1,12 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MessagesService } from './messages.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { getQueueToken } from '@nestjs/bull';
 
 describe('MessagesService', () => {
   let service: MessagesService;
 
   const mockCreate = jest.fn();
   const mockFindMany = jest.fn();
+  const mockQueue = {
+    add: jest.fn(),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -20,6 +24,10 @@ describe('MessagesService', () => {
               findMany: mockFindMany,
             },
           },
+        },
+        {
+          provide: getQueueToken('message-queue'),
+          useValue: mockQueue,
         },
       ],
     }).compile();
