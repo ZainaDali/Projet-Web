@@ -19,15 +19,14 @@
           "raw": "{ \"query\": \"mutation { register(data: { username: \\\"UserA_1750173034\\\", password: \\\"azerty123\\\" }) { id username createdAt } }\" }"
         },
         "url": {
-          "raw": "http://localhost:3000/graphql",
-          "protocol": "http",
+          "raw": "{{baseUrl}}/graphql",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
-          "port": "3000",
           "path": [
             "graphql"
-          ]
+          ],
+          "protocol": "http"
         }
       },
       "event": [
@@ -66,15 +65,14 @@
           "raw": "{ \"query\": \"mutation { register(data: { username: \\\"UserB_1750173034\\\", password: \\\"azerty123\\\" }) { id username createdAt } }\" }"
         },
         "url": {
-          "raw": "http://localhost:3000/graphql",
-          "protocol": "http",
+          "raw": "{{baseUrl}}/graphql",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
-          "port": "3000",
           "path": [
             "graphql"
-          ]
+          ],
+          "protocol": "http"
         }
       },
       "event": [
@@ -113,15 +111,14 @@
           "raw": "{ \"query\": \"mutation { createConversation(data: { participantIds: [\\\"{{userAId}}\\\", \\\"{{userBId}}\\\"] }) { id createdAt participants { id username } } }\" }"
         },
         "url": {
-          "raw": "http://localhost:3000/graphql",
-          "protocol": "http",
+          "raw": "{{baseUrl}}/graphql",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
-          "port": "3000",
           "path": [
             "graphql"
-          ]
+          ],
+          "protocol": "http"
         }
       },
       "event": [
@@ -160,15 +157,14 @@
           "raw": "{ \"query\": \"mutation { sendMessage(data: { conversationId: \\\"{{conversationId}}\\\", senderId: \\\"{{userAId}}\\\", content: \\\"Hello direct\\\" }) { id content createdAt senderId } }\" }"
         },
         "url": {
-          "raw": "http://localhost:3000/graphql",
-          "protocol": "http",
+          "raw": "{{baseUrl}}/graphql",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
-          "port": "3000",
           "path": [
             "graphql"
-          ]
+          ],
+          "protocol": "http"
         }
       },
       "event": [
@@ -206,15 +202,14 @@
           "raw": "{ \"query\": \"mutation { enqueueMessage(data: { content: \\\"BullMQ message\\\", senderId: \\\"{{userAId}}\\\", conversationId: \\\"{{conversationId}}\\\" }) }\" }"
         },
         "url": {
-          "raw": "http://localhost:3000/graphql",
-          "protocol": "http",
+          "raw": "{{baseUrl}}/graphql",
           "host": [
-            "localhost"
+            "{{baseUrl}}"
           ],
-          "port": "3000",
           "path": [
             "graphql"
-          ]
+          ],
+          "protocol": "http"
         }
       },
       "event": [

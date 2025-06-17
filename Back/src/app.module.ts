@@ -22,8 +22,8 @@ import { PingModule } from './graphql/ping.module';
     }),
     BullModule.forRoot({
       redis: {
-        host: 'localhost',
-        port: 6379,
+        host: 'redis-11095.c280.us-central1-2.gce.redns.redis-cloud.com',
+        port: 11095,
       },
     }),
     PrismaModule,
