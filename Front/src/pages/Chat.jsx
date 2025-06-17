@@ -69,43 +69,44 @@ export default function Chat() {
   console.log('Messages:', data, userId);
   return (
      <div className="flex">
-          <div className="sidebar">
-            <Sidebar />
-          </div>
-    <div className="chat-container">
-      <h2>Conversation {otherUsername}</h2>
-      <div className="messages">
-        {data?.getMessages?.map((msg, index) => {
-        const isMe = msg.senderId === userId;
+      <div className="sidebar">
+        <Sidebar />
+      </div>
+      
+      <div className="chat-container">
+        <h2>Conversation {otherUsername}</h2>
+        <div className="messages">
+          {data?.getMessages?.map((msg, index) => {
+          const isMe = msg.senderId === userId;
 
-        return (
-          <div key={index} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
-             <div key={index} className={`message ${isMe ? 'me' : 'other'}`}>
-              <p className="text-sm">{msg.content}</p>
-              <p className="text-xs text-right mt-1 opacity-70">
-                {new Date(msg.createdAt).toLocaleString('fr-FR', {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  day: '2-digit',
-                  month: '2-digit',
-                  year: 'numeric',
-                })}
-              </p>
+          return (
+            <div key={index} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
+              <div key={index} className={`message ${isMe ? 'me' : 'other'}`}>
+                <p className="text-sm">{msg.content}</p>
+                <p className="text-xs text-right mt-1 opacity-70">
+                  {new Date(msg.createdAt).toLocaleString('fr-FR', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                  })}
+                </p>
+              </div>
             </div>
-          </div>
-        );
-        })}
+          );
+          })}
 
+        </div>
+        <div className="input-container">
+          <InputText
+            value={messageContent}
+            onChange={(e) => setMessageContent(e.target.value)}
+            placeholder="Écrire un message..."
+          />
+          <Button label="Envoyer" onClick={handleSendMessage} />
+        </div>
       </div>
-      <div className="input-container">
-        <InputText
-          value={messageContent}
-          onChange={(e) => setMessageContent(e.target.value)}
-          placeholder="Écrire un message..."
-        />
-        <Button label="Envoyer" onClick={handleSendMessage} />
-      </div>
-    </div>
     </div>
   );
 }

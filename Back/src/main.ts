@@ -6,7 +6,7 @@ async function bootstrap() {
 
   // Autoriser CORS pour React (localhost:5173)
   app.enableCors({
-    origin: 'http://localhost:5173', // ou ['http://localhost:5173']
+    origin: 'https://projet-webfront.onrender.com', // ou ['https://projet-webfront.onrender.com']
     credentials: true,
   });
 
