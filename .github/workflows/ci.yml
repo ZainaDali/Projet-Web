@@ -34,7 +34,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        working-directory: ./Back 
+        working-directory: ./Back
         run: npm install
 
       - name: Generate Prisma client
@@ -52,15 +52,14 @@ jobs:
       - name: Install Newman
         run: npm install -g newman
 
-      - name: Start Nest.js in background
+      - name: Start Nest.js in background (prod)
         working-directory: ./Back
         run: |
-          npm run start:dev &
-          sleep 10
+          node dist/main &
+          sleep 15
 
       - name: Run Postman integration tests
-        run: newman run postman/collection.json --env-var baseUrl=localhost:3000
-
+        run: newman run postman/collection.json --env-var baseUrl=http://localhost:3000
 
       - name: Docker build backend
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/projet-web-back:latest ./Back
