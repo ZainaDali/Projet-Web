@@ -30,12 +30,17 @@ type Conversation {
   updatedAt: DateTime!
 }
 
+type PingResponse {
+  result: String!
+}
+
 type Query {
   hello: String!
   me: User!
   findAll: [User!]!
   myConversations: [Conversation!]!
   getMessages(conversationId: String!): [Message!]!
+  ping: PingResponse!
 }
 
 type Mutation {

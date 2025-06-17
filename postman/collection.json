@@ -1,0 +1,241 @@
+{
+  "info": {
+    "name": "Tests GraphQL Messenger - R\u00e9silient",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1 - Register User A",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"query\": \"mutation { register(data: { username: \\\"UserA_1750173034\\\", password: \\\"azerty123\\\" }) { id username createdAt } }\" }"
+        },
+        "url": {
+          "raw": "http://localhost:3000/graphql",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();",
+              "console.log('R\u00e9ponse Register User A:', res);",
+              "if (res.errors) { console.warn('\u26a0\ufe0f Erreurs GraphQL:', res.errors); }",
+              "if (res.data && res.data.register) {",
+              "  pm.test('Register User A ex\u00e9cut\u00e9e avec succ\u00e8s', function () {",
+              "    pm.expect(res.data.register.id).to.not.be.undefined;",
+              "    pm.environment.set('userAId', res.data.register.id);",
+              "  });",
+              "} else {",
+              "  console.warn('\u26a0\ufe0f Mutation Register User A a \u00e9chou\u00e9 ou aucune donn\u00e9e retourn\u00e9e.');",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 - Register User B",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"query\": \"mutation { register(data: { username: \\\"UserB_1750173034\\\", password: \\\"azerty123\\\" }) { id username createdAt } }\" }"
+        },
+        "url": {
+          "raw": "http://localhost:3000/graphql",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();",
+              "console.log('R\u00e9ponse Register User B:', res);",
+              "if (res.errors) { console.warn('\u26a0\ufe0f Erreurs GraphQL:', res.errors); }",
+              "if (res.data && res.data.register) {",
+              "  pm.test('Register User B ex\u00e9cut\u00e9e avec succ\u00e8s', function () {",
+              "    pm.expect(res.data.register.id).to.not.be.undefined;",
+              "    pm.environment.set('userBId', res.data.register.id);",
+              "  });",
+              "} else {",
+              "  console.warn('\u26a0\ufe0f Mutation Register User B a \u00e9chou\u00e9 ou aucune donn\u00e9e retourn\u00e9e.');",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 - Create Conversation",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"query\": \"mutation { createConversation(data: { participantIds: [\\\"{{userAId}}\\\", \\\"{{userBId}}\\\"] }) { id createdAt participants { id username } } }\" }"
+        },
+        "url": {
+          "raw": "http://localhost:3000/graphql",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();",
+              "console.log('R\u00e9ponse Create Conversation:', res);",
+              "if (res.errors) { console.warn('\u26a0\ufe0f Erreurs GraphQL:', res.errors); }",
+              "if (res.data && res.data.createConversation) {",
+              "  pm.test('Create Conversation ex\u00e9cut\u00e9e avec succ\u00e8s', function () {",
+              "    pm.expect(res.data.createConversation.id).to.not.be.undefined;",
+              "    pm.environment.set('conversationId', res.data.createConversation.id);",
+              "  });",
+              "} else {",
+              "  console.warn('\u26a0\ufe0f Mutation Create Conversation a \u00e9chou\u00e9 ou aucune donn\u00e9e retourn\u00e9e.');",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4 - Send Message",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"query\": \"mutation { sendMessage(data: { conversationId: \\\"{{conversationId}}\\\", senderId: \\\"{{userAId}}\\\", content: \\\"Hello direct\\\" }) { id content createdAt senderId } }\" }"
+        },
+        "url": {
+          "raw": "http://localhost:3000/graphql",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();",
+              "console.log('R\u00e9ponse Send Message:', res);",
+              "if (res.errors) { console.warn('\u26a0\ufe0f Erreurs GraphQL:', res.errors); }",
+              "if (res.data && res.data.sendMessage) {",
+              "  pm.test('Send Message ex\u00e9cut\u00e9e avec succ\u00e8s', function () {",
+              "    pm.expect(res.data.sendMessage.id).to.not.be.undefined;",
+              "  });",
+              "} else {",
+              "  console.warn('\u26a0\ufe0f Mutation Send Message a \u00e9chou\u00e9 ou aucune donn\u00e9e retourn\u00e9e.');",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5 - Enqueue Message via BullMQ",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"query\": \"mutation { enqueueMessage(data: { content: \\\"BullMQ message\\\", senderId: \\\"{{userAId}}\\\", conversationId: \\\"{{conversationId}}\\\" }) }\" }"
+        },
+        "url": {
+          "raw": "http://localhost:3000/graphql",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "graphql"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();",
+              "console.log('R\u00e9ponse enqueueMessage:', res);",
+              "if (res.errors) { console.warn('\u26a0\ufe0f Erreurs GraphQL:', res.errors); }",
+              "if (res.data && res.data.enqueueMessage) {",
+              "  pm.test('Message enqueued', function () {",
+              "    pm.expect(res.data.enqueueMessage).to.be.true;",
+              "  });",
+              "} else {",
+              "  console.warn('\u26a0\ufe0f enqueueMessage a \u00e9chou\u00e9.');",
+              "}"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

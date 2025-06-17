@@ -12,6 +12,8 @@ import { BullModule } from '@nestjs/bull';
 import { QueuesModule } from './queues/queues.module';
 import { MessageGateway } from './gateways/message.gateway';
 
+import { PingModule } from './graphql/ping.module';
+
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -28,7 +30,8 @@ import { MessageGateway } from './gateways/message.gateway';
     UserModule,
     ConversationsModule,
     MessagesModule,
-    QueuesModule, 
+    QueuesModule,
+    PingModule,
   ],
   providers: [MessageGateway],
 })

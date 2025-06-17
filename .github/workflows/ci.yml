@@ -19,7 +19,10 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: Checkout repository
@@ -38,13 +41,25 @@ jobs:
         working-directory: ./Back
         run: npx prisma generate
 
-      - name: Run build
+      - name: Build Nest.js
         working-directory: ./Back
         run: npm run build
 
-      - name: Run tests
+      - name: Run unit tests
         working-directory: ./Back
         run: npm run test
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Start Nest.js in background
+        working-directory: ./Back
+        run: |
+          npm run start:dev &
+          sleep 10
+
+      - name: Run Postman integration tests
+        run: newman run postman/collection.json
 
       - name: Docker build backend
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/projet-web-back:latest ./Back
@@ -57,4 +72,3 @@ jobs:
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/projet-web-back:latest
-
