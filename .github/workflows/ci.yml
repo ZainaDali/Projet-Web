@@ -34,7 +34,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        working-directory: ./Back
+        working-directory: ./Back 
         run: npm install
 
       - name: Generate Prisma client
