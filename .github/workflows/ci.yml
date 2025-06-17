@@ -59,7 +59,8 @@ jobs:
           sleep 10
 
       - name: Run Postman integration tests
-        run: newman run postman/collection.json
+        run: newman run postman/collection.json --env-var baseUrl=http://localhost:3000
+
 
       - name: Docker build backend
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/projet-web-back:latest ./Back
